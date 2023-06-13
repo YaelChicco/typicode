@@ -1,0 +1,55 @@
+.album-photos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .album-photos img {
+    width: 400px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  
+  .album-photos p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .album-photos .navigation-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .album-photos .navigation-buttons button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #eaeaea;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .album-photos .navigation-buttons button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .album-photos .back-link {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .album-photos .back-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .album-photos .back-link a:hover {
+    text-decoration: underline;
+  }
+  
