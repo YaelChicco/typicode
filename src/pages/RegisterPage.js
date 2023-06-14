@@ -2,11 +2,12 @@ import React, { useState,createContext } from 'react';
 import {  useNavigate } from "react-router-dom";
 import './login.css'
 function LoginPage() {
+  const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
       let response = await fetch(`http://localhost:3000/login?username=${username}`);
@@ -27,35 +28,14 @@ function LoginPage() {
       alert('An error occurred while logging in');
     }
   };
-  const handleRegister = async (e) => {
-    e.preventDefault();
-  
-    try {
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-  
-      if (response.ok) {
-        alert('Registration successful! Please login with your new account.');
-        // Clear the input fields after successful registration
-        setUsername('');
-        setPassword('');
-      } else {
-        const data = await response.json();
-        alert(data.error);
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      alert('An error occurred during registration');
-    }
-  }
 
   return (
-    <form onSubmit={handleLogin} className='login'>
+    <form onSubmit={handleRegister} className='register'>
+        <label>
+        Name:
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      </label>
+      <br />
       <label>
         Username:
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -67,11 +47,7 @@ function LoginPage() {
       </label>
       <br />
       <button type="submit">Login</button>
-      
-      <button className="register" onClick={handleRegister}>Register</button>
-
     </form>
-    
   );
 }
 

@@ -13,8 +13,9 @@ function UserAlbums() {
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const response = await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${userId}`);
+        const response = await fetch(`http://localhost:3000/albums?userId=${userId}`);
         const data = await response.json();
+        console.log(data); // Add this line to check the value of data
         setAlbums(data);
       } catch (error) {
         console.error(error);

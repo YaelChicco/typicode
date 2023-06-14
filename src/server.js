@@ -24,7 +24,7 @@ connection.connect((error) => {
   }
 });
 
-// Define the route to handle the /users endpoint
+
 app.get('/login', (req, res) => {
   const { username } = req.query;
 
@@ -32,20 +32,84 @@ app.get('/login', (req, res) => {
   const query = 'SELECT * FROM newusers WHERE username = ?';
   connection.query(query, [username], (error, results) => {
     if (error) {
-      console.error('Error executing the query: ', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error executing the query: ', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     } else {
-      if (results.length > 0) {
-        // User found, send the user data as JSON response
         res.json(results);
-        console.log(res);
-      } else {
-        // User not found
-        res.status(404).json({ error: 'User not found' });
-      }
     }
   });
 });
+
+ // Define the route to handle the /users endpoint
+ app.get('/users', (req, res) => {
+    const { username } = req.query;
+  console.log(username);
+    // Execute the query to retrieve user data based on the username
+    const query = 'SELECT * FROM users WHERE username = ?';
+    connection.query(query, [username], (error, results) => {
+        if (error) {
+            console.error('Error executing the query: ', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+
+app.get('/albums', (req, res) => {
+    const { userId } = req.query;
+  
+    // Execute the query to retrieve user data based on the userId
+    const query = 'SELECT * FROM albums WHERE userId = ?';
+    connection.query(query, [userId], (error, results) => {
+        if (error) {
+            console.error('Error executing the query: ', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+  });
+
+  app.get('/photos', (req, res) => {
+    const { albumId, _start, _limit } = req.query;
+  
+    // Execute the query to retrieve photos based on the albumId and pagination parameters
+    const query = 'SELECT * FROM photos WHERE albumId = ? LIMIT ?, ?';
+    connection.query(query, [albumId, _start, _limit], (error, results) => {
+      if (error) {
+        console.error('Error executing the query: ', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        res.json(results);
+      }
+    });
+  });
+
+  app.post('/register', (req, res) => {
+    const { username, password } = req.body;
+    // Perform validation checks on the username and password
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password are required' });
+    }
+  
+    if (password.length < 4) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters long' });
+    }
+  
+    const query = 'INSERT INTO newusers (username, password) VALUES (?, ?)';
+    connection.query(query, [username, password], (error, results) => {
+      if (error) {
+        console.error('Error executing the query: ', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+        res.status(200).json({ message: 'User registered successfully' });
+      }
+    });
+  
+  });
+
 
 // Start the server
 app.listen(3000, () => {
