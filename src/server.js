@@ -10,7 +10,7 @@ app.use(express.json());
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "lq2p0J8h",
+  password: "DaphnaAura19",
   database: "fullStackDb" // Replace "your_database_name" with the actual name of your database
 
 });

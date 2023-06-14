@@ -9,14 +9,9 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      let response = await fetch(`http://localhost:3000/login?username=${username}`);
-      let data = await response.json();
-      console.log(data);
+      const response = await fetch(`http://localhost:3000/login?username=${username}`);
+      const data = await response.json();
       if (data.length && data[0].password === password)  {
-        console.log(username);
-        response = await fetch(`http://localhost:3000/users?username=${username}`);
-        data = await response.json();
-        console.log(data);
         localStorage.setItem('username', JSON.stringify(data[0]));
         navigate("/application")
       } else {
@@ -27,32 +22,6 @@ function LoginPage() {
       alert('An error occurred while logging in');
     }
   };
-  const handleRegister = async (e) => {
-    e.preventDefault();
-  
-    try {
-      const response = await fetch('http://localhost:3000/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-  
-      if (response.ok) {
-        alert('Registration successful! Please login with your new account.');
-        // Clear the input fields after successful registration
-        setUsername('');
-        setPassword('');
-      } else {
-        const data = await response.json();
-        alert(data.error);
-      }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      alert('An error occurred during registration');
-    }
-  }
 
   return (
     <form onSubmit={handleLogin} className='login'>
@@ -67,11 +36,7 @@ function LoginPage() {
       </label>
       <br />
       <button type="submit">Login</button>
-      
-      <button className="register" onClick={handleRegister}>Register</button>
-
     </form>
-    
   );
 }
 
