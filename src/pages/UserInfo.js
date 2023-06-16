@@ -6,26 +6,28 @@ function UserInfo() {
   
     useEffect(() => {
       const storedUserData = JSON.parse(localStorage.getItem('username'));
+
       if (storedUserData) {
         setUser(storedUserData);
       }
     }, []);
 
+  
     return (
       <div className="user-info-container">
         {user ? (
           <div>
-            <h2>{user.name}</h2>
+            <h2>{user.name}</h2> 
             <h3>Contact Information</h3>
             <p>Email: {user.email}</p>
             <p>Phone: {user.phone}</p>
             <p>Website: {user.website}</p>
             <h3>Address</h3>
-            <p>Street: {user.address.street}</p>
-            <p>Suite: {user.address.suite}</p>
-            <p>City: {user.address.city}</p>
+            <p>Street: {user.street}</p>
+            <p>Suite: {user.suite}</p>
+            <p>City: {user.city}</p>
             <h3>Company</h3>
-            <p>Company Name: {user.company.name}</p>
+            <p>Company Name: {user.company_name}</p>
           </div>
         ) : (
           <p className="loading-message">Loading user data...</p>

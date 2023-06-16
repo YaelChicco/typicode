@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 import AppPage from './pages/AppPage';
 import NotFound from './pages/NotFound';
 import UserInfo from './pages/UserInfo';
@@ -19,6 +20,7 @@ function App() {
     <Routes className='navbar'>
     <Route path="/" element={<LoginPage />} />
     <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
     <Route path="/application" element={<AppPage />} />
     <Route path="users/:id/info" element={<UserInfo />}/>
     <Route path="users/:id/todos"  element={<Todos />} />

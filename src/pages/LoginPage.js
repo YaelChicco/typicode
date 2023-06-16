@@ -9,9 +9,11 @@ function LoginPage() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/login?username=${username}`);
-      const data = await response.json();
+      let response = await fetch(`http://localhost:3000/login?username=${username}`);
+      let data = await response.json();
       if (data.length && data[0].password === password)  {
+        response = await fetch(`http://localhost:3000/users?username=${username}`);
+        data = await response.json();
         localStorage.setItem('username', JSON.stringify(data[0]));
         navigate("/application")
       } else {
@@ -22,9 +24,13 @@ function LoginPage() {
       alert('An error occurred while logging in');
     }
   };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    navigate("/register")
+  }
 
   return (
-    <form onSubmit={handleLogin} className='login'>
+    <form className='login'>
       <label>
         Username:
         <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
@@ -35,7 +41,9 @@ function LoginPage() {
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
       <br />
-      <button type="submit">Login</button>
+      <button type="submit" onClick={handleLogin}>Login</button>
+    <button type="button" onClick={handleRegister}>Register</button>
+
     </form>
   );
 }

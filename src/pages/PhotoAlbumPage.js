@@ -32,6 +32,7 @@ function PhotoAlbumPage() {
 
     fetchPhoto();
     console.log(currentPhotoIndex);
+    console.log(photos[currentPhotoIndex]);
   }, [albumId, currentPhotoIndex]);
 
   useEffect(() => {
