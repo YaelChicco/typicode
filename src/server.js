@@ -9,7 +9,7 @@ app.use(express.json());
 const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "lq2p0J8h",
+  password: "DaphnaAura19",
   database: "fullStackDb" // Replace "your_database_name" with the actual name of your database
 
 });
@@ -53,6 +53,140 @@ app.get('/login', (req, res) => {
             res.json(results);
         }
     });
+});
+
+app.get('/todos', (req, res) => {
+  const { userId } = req.query;
+  const query = 'SELECT * FROM todos WHERE userId = ?';
+  connection.query(query, [userId], (error, results) => {
+      if (error) {
+          console.error('Error executing the query: ', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          res.json(results);
+      }
+  });
+});
+// post request to add a todo
+app.post('/todos', (req, res) => {
+  const { userId, title, completed } = req.body;
+
+  if (!userId || !title) {
+    return res.status(400).json({ error: 'User ID and title are required' });
+  }
+
+  const query = 'INSERT INTO todos (userId,  title, completed) VALUES (?, ?, ?)';
+  connection.query(query, [userId, title, completed], (error, results) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Todo added successfully' });
+    }
+  });
+});
+
+// Edit the todos
+app.put('/todos/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, completed } = req.body;
+  if (!title) {
+    return res.status(400).json({ error: 'Title is required' });
+  }
+
+  const query = 'UPDATE todos SET title = ?, completed = ? WHERE id = ?';
+  connection.query(query, [title, completed, id], (error) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Todo updated successfully' });
+    }
+  });
+});
+
+// delete a todo
+app.delete('/todos/:id', (req, res) => {
+  const { id } = req.params;
+
+  // Execute the query to delete the todo with the given id
+  const query = 'DELETE FROM todos WHERE id = ?';
+  connection.query(query, [id], (error, results) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Todo deleted successfully' });
+    }
+  });
+});
+
+app.get('/posts', (req, res) => {
+  console.log(1111)
+  const { userId } = req.query;
+  console.log(22222)
+  const query = 'SELECT * FROM posts WHERE userId = ?';
+  console.log(4444)
+  connection.query(query, [userId], (error, results) => {
+      if (error) {
+          console.error('Error executing the query: ', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      } else {
+          res.json(results);
+      }
+  });
+});
+
+// Request for adding a post
+app.post('/posts', (req, res) => {
+  const { userId, title, body } = req.body;
+
+  if (!userId || !title || !body) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const query = 'INSERT INTO posts (userId, title, body) VALUES (?, ?, ?, ?)';
+  connection.query(query, [userId, title, body], (error, results) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      const newPostId = results.insertId;
+      const newPost = { id: newPostId, userId, title, body };
+      res.status(200).json(newPost);
+    }
+  });
+});
+app.put('/posts/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, completed } = req.body;
+  if (!title) {
+    return res.status(400).json({ error: 'Title is required' });
+  }
+
+  const query = 'UPDATE todos SET title = ?, completed = ? WHERE id = ?';
+  connection.query(query, [title, completed, id], (error) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Todo updated successfully' });
+    }
+  });
+});
+
+app.delete('/posts/:id', (req, res) => {
+  const { id } = req.params;
+
+  const query = 'DELETE FROM posts WHERE id = ?';
+  connection.query(query, [id], (error, results) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'Post deleted successfully' });
+    }
+  });
 });
 
 

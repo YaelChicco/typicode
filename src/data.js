@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS todos (
   userId INT,
   id INT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
-  completed BOOLEAN,
+  completed BOOLEAN
 );
 `;
 const todosData=[
@@ -3373,15 +3373,15 @@ const newUsersData=[
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
-  /*  con.query(createUsersTableQuery, (err, results) => {
+  con.query(createUsersTableQuery, (err, results) => {
     if (err)throw err
     console.log('Users table created successfully');    
   });
-  con.query(insertUserQuery, [userDataValues], (err, results) => {
-  if (err)throw err
-  console.log('Users data inserted successfully');  
-  }); 
-   con.query(createTodosTableQuery, (err, results) => {
+  // con.query(insertUserQuery, [userDataValues], (err, results) => {
+  // if (err)throw err
+  // console.log('Users data inserted successfully');  
+  // }); 
+  con.query(createTodosTableQuery, (err, results) => {
     if (err)throw err
     console.log('Users table created successfully');    
   });
@@ -3389,9 +3389,9 @@ con.connect(function(err) {
     if (err)throw err
     console.log('Todos data inserted successfully');  
     }); 
-     con.query(createPostsTableQuery, (err, results) => {
-      if (err)throw err
-      console.log('Users table created successfully');    
+  con.query(createPostsTableQuery, (err, results) => {
+    if (err)throw err
+    console.log('Users table created successfully');    
     });
   con.query(insertPostQuery, [postDataValues], (err, results) => {
       if (err)throw err
@@ -3415,12 +3415,12 @@ con.connect(function(err) {
       });
       con.query(createPhotosTableQuery, (err, results) => {
         if (err)throw err
-        console.log('Users table created successfully');    
+        console.log('Photos table created successfully');    
       });
       con.query(insertPhotoQuery, [photoDataValues], (err, results) => {
         if (err)throw err
         console.log('Photos data inserted successfully');  
-        }); */ 
+        }); 
         con.query(createNewUsersTable, (err, results) => {
           if (err)throw err
           console.log('Users table created successfully');    
