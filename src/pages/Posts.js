@@ -6,6 +6,7 @@ import './posts.css';
 function UserPosts() {
   const [posts, setPosts] = useState(null);
   const [expandedPostId, setExpandedPostId] = useState(null);
+  const [newPost, setNewPost] = useState({ title: '', body: '' });
   const userName = JSON.parse(localStorage.getItem("username")).name;
   const userId = JSON.parse(localStorage.getItem("username")).id;
   const navigate = useNavigate();
@@ -59,6 +60,31 @@ function UserPosts() {
     }
     
   };
+  const handleAddPost = async () => {
+    try {
+      const updatedPost = { ...newPost, userId };
+      const response = await fetch('http://localhost:3000/posts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedPost),
+      });
+      console.log(response)
+      if (response.ok) {
+        const data = await response.json();
+        console.log('New Post:', data);
+        setNewPost({ title: '', body: '' });
+        fetchPosts(); // Fetch updated posts from the server
+        alert('Post added successfully');
+      } else {
+        throw new Error('Failed to add the post');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while adding the post');
+    }
+  };
 
   const handleDelete = async (postId) => {
   
@@ -95,6 +121,21 @@ function UserPosts() {
       ) : (
         <p>Loading posts...</p>
       )}
+      <div className="add-post">
+      <h3>Add Post</h3>
+      <input
+        type="text"
+        placeholder="Title"
+        value={newPost.title}
+        onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+      />
+      <textarea
+        placeholder="Body"
+        value={newPost.body}
+        onChange={(e) => setNewPost({ ...newPost, body: e.target.value })}
+      />
+      <button onClick={handleAddPost}>Add Post</button>
+    </div>
     </div>
   );
 }

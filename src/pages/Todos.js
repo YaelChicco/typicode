@@ -4,6 +4,7 @@ import './todos.css';
 function UserTodos() {
   const [todos, setTodos] = useState([]);
   const [order, setOrder] = useState('serial');
+  const [newTodo, setNewTodo] = useState('');
 
   const userId = JSON.parse(localStorage.getItem("username")).id;
 
@@ -42,6 +43,26 @@ function UserTodos() {
     });
     setTodos(updatedTodos);
     localStorage.setItem('todos', JSON.stringify(updatedTodos));
+  };
+  
+  const handleAddTodo = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/todos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId, title: newTodo, completed: false }),
+      });
+      const data = await response.json();
+      console.log('New Todo:', data);
+      setNewTodo('');
+      // Fetch updated todos from the server
+      fetchTodosFromServer();
+    } catch (error) {
+      console.error(error);
+      alert('An error occurred while adding the todo');
+    }
   };
 
   const handleEdit = async (todo) => {
@@ -94,6 +115,7 @@ function UserTodos() {
     }
   };
 
+  
   return (
     <div>
       <h2>Todos</h2>
@@ -106,15 +128,19 @@ function UserTodos() {
               {todo.title}
               <button onClick={() => handleEdit(todo)}>Edit</button>
               <button onClick={() => handleDelete(todo.id)}>Delete</button>
-
             </li>
           ))}
         </ul>
       ) : (
         <p>Loading todos...</p>
       )}
+      <div>
+        <input type="text" value={newTodo} onChange={(e) => setNewTodo(e.target.value)} />
+        <button onClick={handleAddTodo}>Add Todo</button>
+      </div>
     </div>
   );
+
 }
 
 export default UserTodos;

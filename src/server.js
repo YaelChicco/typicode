@@ -136,13 +136,13 @@ app.get('/posts', (req, res) => {
 
 // Request for adding a post
 app.post('/posts', (req, res) => {
-  const { userId, title, body } = req.body;
+  const {title, body, userId} = req.body;
 
   if (!userId || !title || !body) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
-
-  const query = 'INSERT INTO posts (userId, title, body) VALUES (?, ?, ?, ?)';
+  
+  const query = 'INSERT INTO posts (userId, title, body) VALUES (?, ?, ?)';
   connection.query(query, [userId, title, body], (error, results) => {
     if (error) {
       console.error('Error executing the query: ', error);
@@ -154,6 +154,8 @@ app.post('/posts', (req, res) => {
     }
   });
 });
+
+
 app.put('/posts/:id', (req, res) => {
   const { id } = req.params;
   const { title, completed } = req.body;

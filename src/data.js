@@ -803,7 +803,7 @@ const todoDataValues = todosData.map((todo) => [
     body TEXT NOT NULL
   ); 
    `;
-
+//AUTO_INCREMENT in the id INT PRIMARY KEY
   const postsData=[
     {
       "userId": 1,
@@ -3383,15 +3383,15 @@ con.connect(function(err) {
   // }); 
   con.query(createTodosTableQuery, (err, results) => {
     if (err)throw err
-    console.log('Users table created successfully');    
+    console.log('Todo table created successfully');    
   });
-  con.query(insertTodoQuery, [todoDataValues], (err, results) => {
-    if (err)throw err
-    console.log('Todos data inserted successfully');  
-    }); 
+  // con.query(insertTodoQuery, [todoDataValues], (err, results) => {
+  //   if (err)throw err
+  //   console.log('Todos data inserted successfully');  
+  //   }); 
   con.query(createPostsTableQuery, (err, results) => {
     if (err)throw err
-    console.log('Users table created successfully');    
+    console.log('Posts table created successfully');    
     });
   con.query(insertPostQuery, [postDataValues], (err, results) => {
       if (err)throw err
