@@ -122,11 +122,8 @@ app.delete('/todos/:id', (req, res) => {
 });
 
 app.get('/posts', (req, res) => {
-  console.log(1111)
   const { userId } = req.query;
-  console.log(22222)
   const query = 'SELECT * FROM posts WHERE userId = ?';
-  console.log(4444)
   connection.query(query, [userId], (error, results) => {
       if (error) {
           console.error('Error executing the query: ', error);
