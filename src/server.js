@@ -365,6 +365,41 @@ app.get('/login', (req, res) => {
     });
 });
 
+app.get('/comments', (req, res) => {
+  const { postId } = req.query;
+
+  // Execute the query to retrieve comments based on the postId
+  const query = 'SELECT * FROM comments WHERE postId = ?';
+  connection.query(query, [postId], (error, results) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// Update user information
+app.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedUser = req.body;
+
+  // Perform any necessary validation or checks on the updatedUser object
+
+  const query = 'UPDATE users SET name = ?, email = ?, phone = ?, website = ?, street = ?, suite = ?, city = ?, company_name = ? WHERE id = ?';
+  const values = [updatedUser.name, updatedUser.email, updatedUser.phone, updatedUser.website, updatedUser.street, updatedUser.suite, updatedUser.city, updatedUser.company_name, id];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error('Error executing the query: ', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json({ message: 'User information updated successfully' });
+    }
+  });
+});
+
 app.get('/todos', (req, res) => {
   const { userId } = req.query;
   const query = 'SELECT * FROM todos WHERE userId = ?';

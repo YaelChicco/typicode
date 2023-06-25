@@ -9,7 +9,7 @@ function CommentsPage() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`);
+        const response = await fetch(`http://localhost:3000/comments?postId=${postId}`);
         const data = await response.json();
         setComments(data);
       } catch (error) {

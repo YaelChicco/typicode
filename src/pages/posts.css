@@ -89,3 +89,30 @@ body {
 .comments-toggle button:hover {
   background-color: #e0e0e0;
 }
+
+    
+.input[type="text"]{
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  margin-bottom: 25px;
+  margin-top: 5px;
+  border: 2px solid #ccc;
+  color: #4f4f4f;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+button {
+  margin: 5px;
+  background: #9b9bc0;
+  color: black;
+  border: 1px solid #1a1812;
+  font-weight: bold;
+  border-radius: 5px;
+  outline: none;
+  font-family: 'Indie Flower', 'Comic Sans', cursive;
+  width: 24%;
+  font-size: 14px;
+  cursor: pointer;
+}
