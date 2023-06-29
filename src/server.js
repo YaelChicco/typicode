@@ -487,7 +487,7 @@ app.post('/posts', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  const query = 'INSERT INTO posts (userId, title, body) VALUES (?, ?, ?, ?)';
+  const query = 'INSERT INTO posts (userId, title, body) VALUES (?, ?, ?)';
   connection.query(query, [userId, title, body], (error, results) => {
     if (error) {
       console.error('Error executing the query: ', error);

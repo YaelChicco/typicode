@@ -3,7 +3,7 @@ var mysql = require('mysql2');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "DaphnaAura19",
+  password: "lq2p0J8h",
 database: "fullStackDb" // Replace "your_database_name" with the actual name of your database
 
 });
@@ -178,7 +178,7 @@ const createTodosTableQuery=
 `
 CREATE TABLE IF NOT EXISTS todos (
   userId INT,
-  id INT PRIMARY KEY,
+  id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   completed BOOLEAN
 );
@@ -3385,11 +3385,11 @@ con.connect(function(err) {
     if (err)throw err
     console.log('Todo table created successfully');    
   });
-  // con.query(insertTodoQuery, [todoDataValues], (err, results) => {
-  //   if (err)throw err
-  //   console.log('Todos data inserted successfully');  
-  //   }); 
-  con.query(createPostsTableQuery, (err, results) => {
+  con.query(insertTodoQuery, [todoDataValues], (err, results) => {
+    if (err)throw err
+    console.log('Todos data inserted successfully');  
+    }); 
+  /* con.query(createPostsTableQuery, (err, results) => {
     if (err)throw err
     console.log('Posts table created successfully');    
     });
@@ -3428,7 +3428,7 @@ con.connect(function(err) {
      con.query(insertnewUserQuery, [newUserDataValues], (err, results) => {
           if (err)throw err
           console.log('users data inserted successfully');  
-          });
+          }); */
   con.end(); // Close the database connection
 
 });
